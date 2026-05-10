@@ -5,7 +5,6 @@ import { Countdown } from "@/components/sales/Countdown";
 import { BeforeAfter } from "@/components/sales/BeforeAfter";
 import { FAQ } from "@/components/sales/FAQ";
 import { StripeCheckout } from "@/components/sales/StripeCheckout";
-import { ZoomableImage } from "@/components/sales/ZoomableImage";
 import { Lightbox } from "@/components/ui/lightbox";
 import { useLightbox } from "@/hooks/use-lightbox";
 
@@ -105,7 +104,12 @@ function SalesPage() {
         .shimmer-line {
           animation: shimmer 3s ease-in-out infinite;
         }
+        @keyframes blink-arrow {
+          0%, 100% { opacity: 1; transform: translateY(0); }
+          50% { opacity: 0.2; transform: translateY(4px); }
+        }
       `}</style>
+
       <section className="relative overflow-hidden px-4 pt-16 pb-20 sm:pt-24 sm:pb-28">
         <div className="absolute inset-0 bg-gradient-to-b from-electric/10 via-transparent to-transparent" />
         <div className="relative max-w-5xl mx-auto text-center">
@@ -175,6 +179,9 @@ function SalesPage() {
               </div>
             ))}
           </div>
+          <p className="mt-12 text-center text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+            Ce n'est pas votre faute. C'est votre <span className="text-white font-semibold">biologie</span> qu'on ne vous a jamais expliquée.
+          </p>
         </div>
       </section>
 
@@ -190,6 +197,12 @@ function SalesPage() {
                 <p className="mt-4 text-base sm:text-lg leading-relaxed">{s}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-12 rounded-2xl bg-electric/15 border border-electric/50 p-6 sm:p-8 text-center">
+            <p className="text-lg sm:text-2xl font-bold leading-relaxed">
+              Les femmes qui appliquent ce protocole perdent en moyenne{" "}
+              <span className="text-electric">3 à 5 kg le premier mois</span> — sans changer leur alimentation.
+            </p>
           </div>
         </div>
       </section>
@@ -233,6 +246,50 @@ function SalesPage() {
         </div>
       </section>
 
+      <section className="px-4 py-20 bg-navy-light">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-black text-center">
+            Ce que vous recevez <span className="text-electric">aujourd'hui</span>
+          </h2>
+          <div className="mt-10 mb-8 flex justify-center">
+            <div className="relative">
+              <div
+                style={{
+                  position: "absolute",
+                  inset: -4,
+                  borderRadius: 20,
+                  background: "transparent",
+                  animation: "neon-pulse 2s ease-in-out infinite",
+                  border: "1px solid rgba(43,107,255,0.3)",
+                  pointerEvents: "none",
+                }}
+              />
+              <div className="relative overflow-hidden rounded-2xl" style={{ width: 220 }}>
+                <img
+                  src="/cover.png"
+                  alt="La Fenêtre Thermogénique Féminine — couverture"
+                  className="neon-cover w-full cursor-zoom-in"
+                  style={{ display: "block" }}
+                  onClick={() => openLightbox("/cover.png")}
+                />
+                <div
+                  className="shimmer-line absolute inset-y-0 w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+                  style={{ top: 0, left: 0 }}
+                />
+              </div>
+            </div>
+          </div>
+          <ul className="mt-10 space-y-4">
+            {["Programme complet La Fenêtre Thermogénique (6 modules)","Guide PDF téléchargeable (60 pages)","Checklist soir imprimable (routine en 5 étapes)","Liste des aliments thermogéniques","Accès à vie aux mises à jour","Groupe privé de soutien"].map((it) => (
+              <li key={it} className="flex items-start gap-3 rounded-lg bg-navy-card border border-border p-4">
+                <Check className="h-6 w-6 text-electric shrink-0" />
+                <span className="text-base sm:text-lg">{it}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <section className="px-4 py-12">
         <div className="max-w-4xl mx-auto rounded-2xl bg-gradient-to-r from-orange-600 to-red-600 p-6 sm:p-8 text-center">
           <p className="text-lg sm:text-2xl font-extrabold uppercase tracking-wide">
@@ -260,9 +317,24 @@ function SalesPage() {
           </div>
 
           <div className="mt-8 space-y-3">
-            <input value={name} onChange={(e) => { setName(e.target.value); setShowStripe(false); }} placeholder="Nom complet" className="w-full rounded-lg bg-navy border border-border px-4 py-3 text-white placeholder:text-muted-foreground focus:outline-none focus:border-electric" />
-            <input value={email} onChange={(e) => { setEmail(e.target.value); setShowStripe(false); }} type="email" placeholder="Email" className="w-full rounded-lg bg-navy border border-border px-4 py-3 text-white placeholder:text-muted-foreground focus:outline-none focus:border-electric" />
-            <select value={country} onChange={(e) => setCountry(e.target.value)} className="w-full rounded-lg bg-navy border border-border px-4 py-3 text-white focus:outline-none focus:border-electric">
+            <input
+              value={name}
+              onChange={(e) => { setName(e.target.value); setShowStripe(false); }}
+              placeholder="Nom complet"
+              className="w-full rounded-lg bg-navy border border-border px-4 py-3 text-white placeholder:text-muted-foreground focus:outline-none focus:border-electric"
+            />
+            <input
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setShowStripe(false); }}
+              type="email"
+              placeholder="Email"
+              className="w-full rounded-lg bg-navy border border-border px-4 py-3 text-white placeholder:text-muted-foreground focus:outline-none focus:border-electric"
+            />
+            <select
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="w-full rounded-lg bg-navy border border-border px-4 py-3 text-white focus:outline-none focus:border-electric"
+            >
               <option value="FR">France</option>
               <option value="BE">Belgique</option>
               <option value="CH">Suisse</option>
@@ -272,21 +344,42 @@ function SalesPage() {
             </select>
           </div>
 
-          <label className="mt-6 block cursor-pointer rounded-xl border-4 border-electric bg-electric/15 p-6">
+          <label className="mt-6 block cursor-pointer rounded-xl border-2 border-dashed border-electric bg-electric/10 p-5 relative">
+            <div className="flex justify-center gap-3 mb-3">
+              {["⬇", "⬇", "⬇"].map((a, i) => (
+                <span
+                  key={i}
+                  style={{ animation: `blink-arrow 0.8s ease-in-out ${i * 0.15}s infinite` }}
+                  className="text-red-500 text-2xl font-black"
+                >
+                  {a}
+                </span>
+              ))}
+            </div>
             <div className="flex items-start gap-3">
-              <input type="checkbox" checked={bump} onChange={(e) => { setBump(e.target.checked); setShowStripe(false); }} className="mt-1 h-5 w-5 accent-[#2b6bff]" />
-              <div className="flex-1">
-                <p className="font-extrabold text-electric text-lg">
-                  <Zap className="inline h-5 w-5" /> PACK ACCÉLÉRATEUR — Résultats x2 en 14 jours
+              <input
+                type="checkbox"
+                checked={bump}
+                onChange={(e) => { setBump(e.target.checked); setShowStripe(false); }}
+                className="mt-1 h-5 w-5 accent-[#2b6bff]"
+              />
+              <div>
+                <p className="font-black text-red-400 uppercase tracking-wide text-sm">
+                  ⚠️ NE PASSEZ PAS À CÔTÉ — Offre unique, non reproposée
                 </p>
-                <ul className="mt-3 text-sm text-white/90 space-y-1.5">
-                  <li>• Séance audio guidée d'endormissement (20 min)</li>
-                  <li>• Plan repas 7 jours spécial Fenêtre Thermogénique</li>
-                  <li>• Tracker de sommeil et perte de poids</li>
+                <p className="mt-2 font-extrabold text-white text-base">
+                  <Zap className="inline h-4 w-4 text-gold" /> PACK ACCÉLÉRATEUR —{" "}
+                  <span className="text-red-400">Résultats x2 en 14 jours</span>
+                </p>
+                <ul className="mt-2 text-sm text-muted-foreground space-y-1">
+                  <li>• <span className="text-white font-bold">Séance audio guidée</span> d'endormissement thermogénique (20 min)</li>
+                  <li>• <span className="text-white font-bold">Plan repas 7 jours</span> spécial Fenêtre Thermogénique</li>
+                  <li>• <span className="text-white font-bold">Tracker de sommeil</span> et perte de poids (Excel + PDF)</li>
                 </ul>
-                <p className="mt-4">
-                  <span className="font-black text-white text-xl">+7,80€ seulement</span>{" "}
+                <p className="mt-3 text-sm">
+                  <span className="font-black text-white">+7,80€ seulement</span>{" "}
                   <span className="text-muted-foreground line-through">(valeur réelle : 37€)</span>
+                  <span className="ml-2 text-red-400 font-bold">— ajout en 1 clic ici</span>
                 </p>
               </div>
             </div>
@@ -301,12 +394,23 @@ function SalesPage() {
 
           <div className="mt-6">
             {!showStripe ? (
-              <button onClick={() => setShowStripe(true)} className="pulse-cta w-full inline-flex items-center justify-center gap-2 rounded-lg bg-electric px-6 py-4 text-base sm:text-lg font-extrabold uppercase tracking-wide text-white hover:brightness-110 transition">
+              <button
+                onClick={() => setShowStripe(true)}
+                className="pulse-cta w-full inline-flex items-center justify-center gap-2 rounded-lg bg-electric px-6 py-4 text-base sm:text-lg font-extrabold uppercase tracking-wide text-white hover:brightness-110 transition"
+              >
                 <Lock className="h-5 w-5" />
                 Procéder au paiement sécurisé
               </button>
             ) : (
-              <StripeCheckout mode="main" redirectTo="/upsell" buttonLabel="Oui, j'accède au programme" email={email} name={name} orderBump={bump} />
+              <StripeCheckout
+                key={`${email}-${bump}`}
+                mode="main"
+                redirectTo="/upsell"
+                buttonLabel="Oui, j'accède au programme"
+                email={email}
+                name={name}
+                orderBump={bump}
+              />
             )}
           </div>
         </div>
@@ -317,7 +421,7 @@ function SalesPage() {
           <ShieldCheck className="h-14 w-14 text-success mx-auto" />
           <h3 className="mt-4 text-2xl sm:text-3xl font-black">Satisfaite ou Remboursée — 30 jours</h3>
           <p className="mt-3 text-muted-foreground leading-relaxed">
-            Si vous ne voyez aucun résultat en 30 jours, je vous rembourse intégralement.
+            Si vous ne voyez aucun résultat en 30 jours, je vous rembourse intégralement. Point final.
           </p>
         </div>
       </section>
@@ -329,11 +433,22 @@ function SalesPage() {
         </div>
       </section>
 
+      <section className="px-4 py-20 bg-navy-light text-center">
+        <p className="text-electric font-bold uppercase tracking-widest text-sm">Dernière chance</p>
+        <h2 className="mt-3 text-3xl sm:text-4xl font-black max-w-2xl mx-auto">
+          Rejoignez le programme au prix de lancement
+        </h2>
+        <div className="mt-8">
+          <CTAButton>Je veux mon accès maintenant</CTAButton>
+        </div>
+      </section>
+
       <footer className="px-4 py-10 text-center text-xs text-muted-foreground border-t border-border">
         <p className="flex items-center justify-center gap-2">
           <Lock className="h-3 w-3" /> Paiement 100% sécurisé — © {new Date().getFullYear()} La Fenêtre Thermogénique
         </p>
       </footer>
+
       {lightboxSrc && <Lightbox src={lightboxSrc} onClose={closeLightbox} />}
     </main>
   );
