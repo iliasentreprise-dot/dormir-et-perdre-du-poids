@@ -130,6 +130,34 @@ function SalesPage() {
             <span className="inline-flex items-center gap-1.5"><Check className="h-4 w-4 text-electric" /> Paiement sécurisé</span>
             <span className="inline-flex items-center gap-1.5"><Check className="h-4 w-4 text-electric" /> Satisfait ou remboursé 30 jours</span>
           </div>
+          <div className="mt-10 flex justify-center">
+            <div className="relative">
+              <div
+                style={{
+                  position: "absolute",
+                  inset: -4,
+                  borderRadius: 20,
+                  background: "transparent",
+                  animation: "neon-pulse 2s ease-in-out infinite",
+                  border: "1px solid rgba(43,107,255,0.3)",
+                  pointerEvents: "none",
+                }}
+              />
+              <div className="relative overflow-hidden rounded-2xl" style={{ width: 220 }}>
+                <img
+                  src="/cover.png"
+                  alt="La Fenêtre Thermogénique Féminine"
+                  className="neon-cover w-full cursor-zoom-in"
+                  style={{ display: "block" }}
+                  onClick={() => openLightbox("/cover.png")}
+                />
+                <div
+                  className="shimmer-line absolute inset-y-0 w-16 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
+                  style={{ top: 0, left: 0 }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
