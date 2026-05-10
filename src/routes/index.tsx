@@ -334,6 +334,7 @@ function SalesPage() {
           <Lock className="h-3 w-3" /> Paiement 100% sécurisé — © {new Date().getFullYear()} La Fenêtre Thermogénique
         </p>
       </footer>
+      {lightboxSrc && <Lightbox src={lightboxSrc} onClose={closeLightbox} />}
     </main>
   );
 }
