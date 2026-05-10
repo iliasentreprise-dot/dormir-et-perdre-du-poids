@@ -70,6 +70,42 @@ function SalesPage() {
 
   return (
     <main className="bg-navy text-white">
+      <style>{`
+        @keyframes neon-pulse {
+          0%, 100% {
+            box-shadow:
+              0 0 8px #2b6bff,
+              0 0 20px #2b6bff,
+              0 0 40px #2b6bff,
+              0 0 80px #2b6bff,
+              inset 0 0 20px rgba(43,107,255,0.1);
+          }
+          50% {
+            box-shadow:
+              0 0 4px #2b6bff,
+              0 0 10px #2b6bff,
+              0 0 20px #2b6bff,
+              0 0 40px #2b6bff,
+              inset 0 0 10px rgba(43,107,255,0.05);
+          }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-100%) rotate(45deg); }
+          100% { transform: translateX(300%) rotate(45deg); }
+        }
+        .neon-cover {
+          animation: neon-pulse 2s ease-in-out infinite, float 4s ease-in-out infinite;
+          border: 2px solid #2b6bff;
+          border-radius: 16px;
+        }
+        .shimmer-line {
+          animation: shimmer 3s ease-in-out infinite;
+        }
+      `}</style>
       <section className="relative overflow-hidden px-4 pt-16 pb-20 sm:pt-24 sm:pb-28">
         <div className="absolute inset-0 bg-gradient-to-b from-electric/10 via-transparent to-transparent" />
         <div className="relative max-w-5xl mx-auto text-center">
