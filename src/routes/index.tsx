@@ -6,6 +6,8 @@ import { BeforeAfter } from "@/components/sales/BeforeAfter";
 import { FAQ } from "@/components/sales/FAQ";
 import { StripeCheckout } from "@/components/sales/StripeCheckout";
 import { ZoomableImage } from "@/components/sales/ZoomableImage";
+import { Lightbox } from "@/components/ui/lightbox";
+import { useLightbox } from "@/hooks/use-lightbox";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,6 +60,7 @@ function SalesPage() {
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("FR");
   const [showStripe, setShowStripe] = useState(false);
+  const { lightboxSrc, openLightbox, closeLightbox } = useLightbox();
 
   const total = bump ? 25.6 : 17.8;
   const [deadline, setDeadline] = useState<Date | null>(null);
